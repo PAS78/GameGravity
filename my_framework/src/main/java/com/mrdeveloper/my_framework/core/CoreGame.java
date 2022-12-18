@@ -1,14 +1,17 @@
 package com.mrdeveloper.my_framework.core;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CoreGame extends AppCompatActivity {
 

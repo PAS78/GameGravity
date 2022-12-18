@@ -1,7 +1,6 @@
 package com.mrdeveloper.gravity.scenes;
 
 import android.graphics.Color;
-import android.support.annotation.ColorLong;
 
 import com.mrdeveloper.gravity.R;
 import com.mrdeveloper.gravity.clases.GameManager;

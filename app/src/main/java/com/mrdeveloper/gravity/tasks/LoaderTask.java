@@ -1,9 +1,9 @@
 package com.mrdeveloper.gravity.tasks;
 
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v4.content.res.ResourcesCompat;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import com.mrdeveloper.gravity.R;
 import com.mrdeveloper.gravity.interfaces.TaskCompleteListener;

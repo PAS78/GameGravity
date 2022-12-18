@@ -1,0 +1,460 @@
+Index: .idea/runConfigurations.xml
+===================================================================
+diff --git a/.idea/runConfigurations.xml b/.idea/runConfigurations.xml
+deleted file mode 100644
+--- a/.idea/runConfigurations.xml	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ /dev/null	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
+@@ -1,12 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="RunConfigurationProducerService">
+-    <option name="ignoredProducers">
+-      <set>
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.AllInPackageGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestClassGradleConfigurationProducer" />
+-        <option value="org.jetbrains.plugins.gradle.execution.test.runner.TestMethodGradleConfigurationProducer" />
+-      </set>
+-    </option>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/.idea/misc.xml	(date 1671349609935)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/com/mrdeveloper/gravity/tasks/LoaderTask.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.mrdeveloper.gravity.tasks;\r\n\r\nimport android.graphics.Typeface;\r\nimport android.os.AsyncTask;\r\nimport android.os.Build;\r\nimport android.support.v4.content.res.ResourcesCompat;\r\n\r\nimport com.mrdeveloper.gravity.R;\r\nimport com.mrdeveloper.gravity.interfaces.TaskCompleteListener;\r\nimport com.mrdeveloper.gravity.scenes.LoaderResourceScene;\r\nimport com.mrdeveloper.gravity.utilits.ResourceGame;\r\nimport com.mrdeveloper.gravity.utilits.SettingsGame;\r\nimport com.mrdeveloper.my_framework.core.CoreGame;\r\nimport com.mrdeveloper.my_framework.core.GraphicsGame;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class  LoaderTask extends AsyncTask<Void, Integer, Void> {\r\n\r\n    private CoreGame mCoreGame;\r\n    private TaskCompleteListener mTaskCompleteListener;\r\n\r\n    public LoaderTask(CoreGame coreGame, TaskCompleteListener taskCompleteListener) {\r\n        mCoreGame = coreGame;\r\n        mTaskCompleteListener = taskCompleteListener;\r\n    }\r\n\r\n    @Override\r\n    protected void onProgressUpdate(Integer... values) {\r\n        super.onProgressUpdate(values);\r\n        LoaderResourceScene.setProgressLoader(values[0]);\r\n    }\r\n\r\n    @Override\r\n    protected Void doInBackground(Void... voids) {\r\n        loaderAssets();\r\n        return null;\r\n    }\r\n\r\n    @Override\r\n    protected void onPostExecute(Void aVoid) {\r\n        super.onPostExecute(aVoid);\r\n        mTaskCompleteListener.onComplete();\r\n    }\r\n\r\n    private void loaderAssets() {\r\n        loadTexture(mCoreGame.getGraphicsFW());\r\n        publishProgress(100);\r\n        loadSpritePlayer(mCoreGame.getGraphicsFW());\r\n        publishProgress(300);\r\n\r\n        loadSpriteEnemy(mCoreGame.getGraphicsFW());\r\n        publishProgress(500);\r\n        loadOther(mCoreGame.getGraphicsFW());\r\n        publishProgress(600);\r\n        loadAudio(mCoreGame);\r\n\r\n        loadSpritePlayerShieldsOn(mCoreGame.getGraphicsFW());\r\n        publishProgress(700);\r\n        loadGifts(mCoreGame.getGraphicsFW());\r\n        publishProgress(800);\r\n    }\r\n\r\n    private void loadGifts(GraphicsGame graphicsGame) {\r\n        //Метод загружает подарки\r\n        ResourceGame.sSpriteProtector = new ArrayList<>();\r\n        ResourceGame.sSpriteProtector.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                256, 192, 32, 32));\r\n        ResourceGame.sSpriteProtector.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                288, 192, 32, 32));\r\n        ResourceGame.sSpriteProtector.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                320, 192, 32, 32));\r\n        ResourceGame.sSpriteProtector.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                352, 192, 32, 32));\r\n    }\r\n\r\n    private void loadSpritePlayerShieldsOn(GraphicsGame graphicsGame) {\r\n        //Метод загружает спрайты игрока с включенными щитами\r\n        ResourceGame.sSpritePlayerShieldsOn = new ArrayList<>();\r\n        ResourceGame.sSpritePlayerShieldsOnBoost = new ArrayList<>();\r\n        ResourceGame.sSpritePlayerShieldsOn.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                0, 128, 64, 64));\r\n        ResourceGame.sSpritePlayerShieldsOn.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                64, 128, 64, 64));\r\n        ResourceGame.sSpritePlayerShieldsOn.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                128, 128, 64, 64));\r\n        ResourceGame.sSpritePlayerShieldsOn.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                192, 128, 64, 64));\r\n\r\n        ResourceGame.sSpritePlayerShieldsOnBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                0, 192, 64, 64));\r\n        ResourceGame.sSpritePlayerShieldsOnBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                64, 192, 64, 64));\r\n        ResourceGame.sSpritePlayerShieldsOnBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                128, 192, 64, 64));\r\n        ResourceGame.sSpritePlayerShieldsOnBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                192, 192, 64, 64));\r\n    }\r\n\r\n    private void loadAudio(CoreGame coreGame) {\r\n        //Мето загружает музыку и звуки\r\n        ResourceGame.sMainMusicGame = coreGame.getAudioFW().newMusic(\"music.ogg\");\r\n        ResourceGame.sSoundHit = coreGame.getAudioFW().newSound(\"hit.ogg\");\r\n        ResourceGame.sSoundExplode = coreGame.getAudioFW().newSound(\"explode.ogg\");\r\n        ResourceGame.sSoundTouch = coreGame.getAudioFW().newSound(\"touch.ogg\");\r\n    }\r\n\r\n    private void loadOther(GraphicsGame graphicsGame) {\r\n        ResourceGame.sShieldHitEnemy = graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                0, 128, 64, 64);\r\n        SettingsGame.loadSettings(mCoreGame);\r\n\r\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\r\n            ResourceGame.mainMenuFont = mCoreGame.getResources().getFont(R.font.russo_one);\r\n        } else {\r\n            ResourceGame.mainMenuFont = ResourcesCompat.getFont(mCoreGame.getApplicationContext(),R.font.russo_one);\r\n        }\r\n    }\r\n\r\n    private void loadSpriteEnemy(GraphicsGame graphicsGame) {\r\n        //Метод загружает спрайты врагов\r\n        ResourceGame.sSpriteEnemy = new ArrayList<>();\r\n\r\n        ResourceGame.sSpriteEnemy.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 256, 0,\r\n                64, 64));\r\n        ResourceGame.sSpriteEnemy.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 320, 0,\r\n                64, 64));\r\n        ResourceGame.sSpriteEnemy.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 384, 0,\r\n                64, 64));\r\n        ResourceGame.sSpriteEnemy.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 448, 0,\r\n                64, 64));\r\n    }\r\n\r\n    private void loadSpritePlayer(GraphicsGame graphicsGame) {\r\n        //Метод загружает спрайты игрока без щитов\r\n        ResourceGame.sSpritePlayer = new ArrayList<>();\r\n        ResourceGame.sSpritePlayerBoost = new ArrayList<>();\r\n        ResourceGame.sSpriteExplosionPlayer = new ArrayList<>();\r\n\r\n        ResourceGame.sSpriteExplosionPlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                256, 256, 64, 64));\r\n        ResourceGame.sSpriteExplosionPlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                320, 256, 64, 64));\r\n        ResourceGame.sSpriteExplosionPlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                384, 256, 64, 64));\r\n        ResourceGame.sSpriteExplosionPlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas,\r\n                448, 256, 64, 64));\r\n\r\n\r\n        ResourceGame.sSpritePlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 0, 0,\r\n                64, 64));\r\n        ResourceGame.sSpritePlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 64, 0,\r\n                64, 64));\r\n        ResourceGame.sSpritePlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 128, 0,\r\n                64, 64));\r\n        ResourceGame.sSpritePlayer.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 192, 0,\r\n                64, 64));\r\n\r\n        ResourceGame.sSpritePlayerBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 0, 64,\r\n                64, 64));\r\n        ResourceGame.sSpritePlayerBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 64, 64,\r\n                64, 64));\r\n        ResourceGame.sSpritePlayerBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 128, 64,\r\n                64, 64));\r\n        ResourceGame.sSpritePlayerBoost.add(graphicsGame.newSprite(ResourceGame.sTextureAtlas, 192, 64,\r\n                64, 64));\r\n\r\n    }\r\n\r\n    private void loadTexture(GraphicsGame graphicsGame) {\r\n        //Загрузка текстур\r\n        ResourceGame.sTextureAtlas = graphicsGame.newTexture(\"texture_atlas.png\");\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/mrdeveloper/gravity/tasks/LoaderTask.java b/app/src/main/java/com/mrdeveloper/gravity/tasks/LoaderTask.java
+--- a/app/src/main/java/com/mrdeveloper/gravity/tasks/LoaderTask.java	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/app/src/main/java/com/mrdeveloper/gravity/tasks/LoaderTask.java	(date 1671351400076)
+@@ -1,9 +1,9 @@
+ package com.mrdeveloper.gravity.tasks;
+ 
+-import android.graphics.Typeface;
+ import android.os.AsyncTask;
+ import android.os.Build;
+-import android.support.v4.content.res.ResourcesCompat;
++
++import androidx.core.content.res.ResourcesCompat;
+ 
+ import com.mrdeveloper.gravity.R;
+ import com.mrdeveloper.gravity.interfaces.TaskCompleteListener;
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1671349609956)
++++ b/.idea/compiler.xml	(date 1671349609956)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="11" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1671350621888)
++++ b/.idea/jarRepositories.xml	(date 1671350621888)
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="BintrayJCenter" />
++      <option name="name" value="BintrayJCenter" />
++      <option name="url" value="https://jcenter.bintray.com/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="Google" />
++      <option name="name" value="Google" />
++      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="MavenRepo" />
++      <option name="name" value="MavenRepo" />
++      <option name="url" value="https://repo.maven.apache.org/maven2/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+new file mode 100644
+--- /dev/null	(date 1671349086659)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1671349086659)
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="deploymentTargetDropDown">
++    <targetSelectedWithDropDown>
++      <Target>
++        <type value="QUICK_BOOT_TARGET" />
++        <deviceKey>
++          <Key>
++            <type value="VIRTUAL_DEVICE_PATH" />
++            <value value="C:\Users\PAS\.android\avd\Nexus_One_API_25.avd" />
++          </Key>
++        </deviceKey>
++      </Target>
++    </targetSelectedWithDropDown>
++    <timeTargetWasSelectedWithDropDown value="2022-12-18T07:37:09.076484100Z" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <compositeConfiguration>\r\n          <compositeBuild compositeDefinitionSource=\"SCRIPT\" />\r\n        </compositeConfiguration>\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/.idea/gradle.xml	(date 1671349503427)
+@@ -1,14 +1,20 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+-        <compositeConfiguration>
+-          <compositeBuild compositeDefinitionSource="SCRIPT" />
+-        </compositeConfiguration>
++        <option name="testRunner" value="GRADLE" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+-        <option name="resolveModulePerSourceSet" value="false" />
++        <option name="gradleJvm" value="11" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++            <option value="$PROJECT_DIR$/my_framework" />
++          </set>
++        </option>
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: gradle.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Project-wide Gradle settings.\r\n# IDE (e.g. Android Studio) users:\r\n# Gradle settings configured through the IDE *will override*\r\n# any settings specified in this file.\r\n# For more details on how to configure your build environment visit\r\n# http://www.gradle.org/docs/current/userguide/build_environment.html\r\n# Specifies the JVM arguments used for the daemon process.\r\n# The setting is particularly useful for tweaking memory settings.\r\norg.gradle.jvmargs=-Xmx1536m\r\n# When configured, Gradle will run in incubating parallel mode.\r\n# This option should only be used with decoupled projects. More details, visit\r\n# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects\r\n# org.gradle.parallel=true\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle.properties b/gradle.properties
+--- a/gradle.properties	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/gradle.properties	(date 1671349767375)
+@@ -1,15 +1,16 @@
+-# Project-wide Gradle settings.
+-# IDE (e.g. Android Studio) users:
+-# Gradle settings configured through the IDE *will override*
+-# any settings specified in this file.
+-# For more details on how to configure your build environment visit
++## For more details on how to configure your build environment visit
+ # http://www.gradle.org/docs/current/userguide/build_environment.html
++#
+ # Specifies the JVM arguments used for the daemon process.
+ # The setting is particularly useful for tweaking memory settings.
+-org.gradle.jvmargs=-Xmx1536m
++# Default value: -Xmx1024m -XX:MaxPermSize=256m
++# org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
++#
+ # When configured, Gradle will run in incubating parallel mode.
+ # This option should only be used with decoupled projects. More details, visit
+ # http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+ # org.gradle.parallel=true
+-
+-
++#Sun Dec 18 10:49:27 MSK 2022
++org.gradle.jvmargs=-Xmx1536m
++android.useAndroidX=true
++android.enableJetifier=true
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\n\r\nbuildscript {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n        \r\n    }\r\n    dependencies {\r\n        classpath 'com.android.tools.build:gradle:3.4.1'\r\n        \r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n        \r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/build.gradle	(date 1671350554505)
+@@ -3,11 +3,11 @@
+ buildscript {
+     repositories {
+         google()
+-        jcenter()
++        mavenCentral()
+         
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:3.4.1'
++        classpath 'com.android.tools.build:gradle:7.3.1'
+         
+         // NOTE: Do not place your application dependencies here; they belong
+         // in the individual module build.gradle files
+@@ -17,7 +17,7 @@
+ allprojects {
+     repositories {
+         google()
+-        jcenter()
++        mavenCentral()
+         
+     }
+ }
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.mrdeveloper.gravity\">\r\n\r\n    <uses-permission android:name=\"android.permission.WAKE_LOCK\">\r\n    </uses-permission>\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <activity android:name=\".Main\"\r\n            android:screenOrientation=\"landscape\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/app/src/main/AndroidManifest.xml	(date 1671349599046)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.mrdeveloper.gravity">
++<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+     <uses-permission android:name="android.permission.WAKE_LOCK">
+     </uses-permission>
+@@ -13,7 +12,8 @@
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+         <activity android:name=".Main"
+-            android:screenOrientation="landscape">
++            android:screenOrientation="landscape"
++            android:exported="true">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
+Index: my_framework/src/main/java/com/mrdeveloper/my_framework/core/CoreGame.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.mrdeveloper.my_framework.core;\r\n\r\nimport android.content.SharedPreferences;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.Point;\r\nimport android.os.Bundle;\r\nimport android.support.annotation.Nullable;\r\nimport android.support.v7.app.AppCompatActivity;\r\nimport android.view.Display;\r\nimport android.view.KeyEvent;\r\nimport android.view.WindowManager;\r\n\r\npublic class CoreGame extends AppCompatActivity {\r\n\r\n    //region Fields\r\n    private final float FRAME_BUFFER_WIDTH = 800;\r\n    private final float FRAME_BUFFER_HEIGHT = 600;\r\n\r\n    private LoopGame mLoopGame;\r\n    private GraphicsGame mGraphicsGame;\r\n    private TouchListenerGame mTouchListenerGame;\r\n\r\n    private AudioGame mAudioGame;\r\n    private Display mDisplay;\r\n    private Point mSizeDisplay;\r\n    private Bitmap mFrameBuffer;\r\n    private SceneGame mSceneGame;\r\n    private float mSceneWidth;\r\n    private float mSceneHeight;\r\n    private SharedPreferences mSharedPreferences;\r\n    private final String SETTINGS = \"settings\";\r\n    private boolean mIsPressedKeyBack;\r\n//endregion\r\n\r\n\r\n    @Override\r\n    protected void onCreate(@Nullable Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);\r\n        init();\r\n        setContentView(mLoopGame);\r\n    }\r\n\r\n    private void init() {\r\n        mSharedPreferences = getSharedPreferences(SETTINGS, MODE_PRIVATE);\r\n        mSizeDisplay = new Point();\r\n        mDisplay = getWindowManager().getDefaultDisplay();\r\n        mDisplay.getSize(mSizeDisplay);\r\n        mFrameBuffer = Bitmap.createBitmap((int) FRAME_BUFFER_WIDTH, (int) FRAME_BUFFER_HEIGHT, Bitmap.Config.ARGB_8888);\r\n        mSceneWidth = FRAME_BUFFER_WIDTH / mSizeDisplay.x;\r\n        mSceneHeight = FRAME_BUFFER_HEIGHT / mSizeDisplay.y;\r\n        mAudioGame = new AudioGame(this);\r\n        mLoopGame = new LoopGame(this, mFrameBuffer);\r\n        mGraphicsGame = new GraphicsGame(getAssets(), mFrameBuffer);\r\n        mTouchListenerGame = new TouchListenerGame(mLoopGame, mSceneWidth, mSceneHeight);\r\n        mSceneGame = getStartScene();\r\n        mIsPressedKeyBack = false;\r\n    }\r\n\r\n\r\n    public void onResume() {\r\n        super.onResume();\r\n        mSceneGame.resume();\r\n        mLoopGame.startGame();\r\n    }\r\n\r\n    public void onPause() {\r\n        super.onPause();\r\n        mSceneGame.pause();\r\n        mLoopGame.stopGame();\r\n        if (isFinishing()) {\r\n            mSceneGame.dispose();\r\n        }\r\n    }\r\n\r\n    public boolean onKeyDown(int keyCode, KeyEvent event) {\r\n        if (keyCode == KeyEvent.KEYCODE_BACK) {\r\n            mIsPressedKeyBack = true;\r\n            return true;\r\n        }\r\n        return false;\r\n    }\r\n\r\n    //region Get&Set\r\n    public boolean isPressedKeyBack() {\r\n        return mIsPressedKeyBack;\r\n    }\r\n\r\n    public void setPressedKeyBack(boolean mIsPressedKeyBack) {\r\n        this.mIsPressedKeyBack = mIsPressedKeyBack;\r\n    }\r\n\r\n    public GraphicsGame getGraphicsFW() {\r\n        return mGraphicsGame;\r\n    }\r\n\r\n    public TouchListenerGame getTouchListenerFW() {\r\n        return mTouchListenerGame;\r\n    }\r\n\r\n    public void setScene(SceneGame sceneGame) {\r\n        if (sceneGame == null) {\r\n            throw new IllegalArgumentException(\"Не возможно загрзуить сцену\");\r\n        }\r\n        this.mSceneGame.pause();\r\n        this.mSceneGame.dispose();\r\n        sceneGame.resume();\r\n        sceneGame.update();\r\n        this.mSceneGame = sceneGame;\r\n    }\r\n\r\n    public SceneGame getCurrentScene() {\r\n        return mSceneGame;\r\n    }\r\n\r\n    public SceneGame getStartScene() {\r\n        return mSceneGame;\r\n    }\r\n\r\n    public SharedPreferences getSharedPreferences() {\r\n        return mSharedPreferences;\r\n    }\r\n\r\n    public AudioGame getAudioFW() {\r\n        return mAudioGame;\r\n    }\r\n    //endregion\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my_framework/src/main/java/com/mrdeveloper/my_framework/core/CoreGame.java b/my_framework/src/main/java/com/mrdeveloper/my_framework/core/CoreGame.java
+--- a/my_framework/src/main/java/com/mrdeveloper/my_framework/core/CoreGame.java	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/my_framework/src/main/java/com/mrdeveloper/my_framework/core/CoreGame.java	(date 1671350918375)
+@@ -1,15 +1,18 @@
+ package com.mrdeveloper.my_framework.core;
+ 
++import static android.content.Context.MODE_PRIVATE;
++
+ import android.content.SharedPreferences;
+ import android.graphics.Bitmap;
+ import android.graphics.Point;
+ import android.os.Bundle;
+-import android.support.annotation.Nullable;
+-import android.support.v7.app.AppCompatActivity;
+ import android.view.Display;
+ import android.view.KeyEvent;
+ import android.view.WindowManager;
+ 
++import androidx.annotation.Nullable;
++import androidx.appcompat.app.AppCompatActivity;
++
+ public class CoreGame extends AppCompatActivity {
+ 
+     //region Fields
+Index: my_framework/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.library'\r\n\r\nandroid {\r\n    compileSdkVersion 28\r\n\r\n\r\n\r\n    defaultConfig {\r\n        minSdkVersion 22\r\n        targetSdkVersion 28\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"android.support.test.runner.AndroidJUnitRunner\"\r\n\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(dir: 'libs', include: ['*.jar'])\r\n\r\n    implementation 'com.android.support:appcompat-v7:28.0.0'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'com.android.support.test:runner:1.0.2'\r\n    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my_framework/build.gradle b/my_framework/build.gradle
+--- a/my_framework/build.gradle	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/my_framework/build.gradle	(date 1671351324580)
+@@ -1,15 +1,13 @@
+-apply plugin: 'com.android.library'
++plugins {
++    id 'com.android.library'
++}
+ 
+ android {
+-    compileSdkVersion 28
+-
+-
++    compileSdkVersion 33
+ 
+     defaultConfig {
+         minSdkVersion 22
+-        targetSdkVersion 28
+-        versionCode 1
+-        versionName "1.0"
++        targetSdkVersion 33
+ 
+         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+ 
+@@ -21,14 +19,16 @@
+             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         }
+     }
++    namespace 'com.mrdeveloper.my_framework'
+ 
+ }
+ 
+ dependencies {
+     implementation fileTree(dir: 'libs', include: ['*.jar'])
+-
+-    implementation 'com.android.support:appcompat-v7:28.0.0'
+-    testImplementation 'junit:junit:4.12'
+-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
++    runtimeOnly group: 'androidx.appcompat', name: 'appcompat', version: '1.5.1'
++    implementation 'com.google.android.material:material:1.7.0'
++    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
++    testImplementation 'junit:junit:4.13.2'
++    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
++    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+ }
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\r\n\r\nandroid {\r\n    compileSdkVersion 28\r\n    defaultConfig {\r\n        applicationId \"com.mrdeveloper.gravity\"\r\n        minSdkVersion 22\r\n        targetSdkVersion 28\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n        testInstrumentationRunner \"android.support.test.runner.AndroidJUnitRunner\"\r\n    }\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n}\r\n\r\ndependencies {\r\n    implementation fileTree(include: ['*.jar'], dir: 'libs')\r\n    implementation 'com.android.support:appcompat-v7:28.0.0'\r\n    implementation 'com.android.support.constraint:constraint-layout:1.1.3'\r\n    testImplementation 'junit:junit:4.12'\r\n    androidTestImplementation 'com.android.support.test:runner:1.0.2'\r\n    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'\r\n    implementation project(':my_framework')\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/app/build.gradle	(date 1671350872954)
+@@ -1,11 +1,13 @@
+-apply plugin: 'com.android.application'
++plugins {
++    id 'com.android.application'
++}
+ 
+ android {
+-    compileSdkVersion 28
++    compileSdkVersion 33
+     defaultConfig {
+         applicationId "com.mrdeveloper.gravity"
+         minSdkVersion 22
+-        targetSdkVersion 28
++        targetSdkVersion 33
+         versionCode 1
+         versionName "1.0"
+         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+@@ -16,14 +18,18 @@
+             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         }
+     }
++    namespace 'com.mrdeveloper.gravity'
+ }
++
++apply plugin: 'com.android.application'
+ 
+ dependencies {
+     implementation fileTree(include: ['*.jar'], dir: 'libs')
+-    implementation 'com.android.support:appcompat-v7:28.0.0'
+-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+-    testImplementation 'junit:junit:4.12'
+-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
++    runtimeOnly group: 'androidx.appcompat', name: 'appcompat', version: '1.5.1'
++    implementation 'com.google.android.material:material:1.7.0'
++    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
++    testImplementation 'junit:junit:4.13.2'
++    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
++    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+     implementation project(':my_framework')
+ }
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#Mon Apr 29 18:06:54 MSK 2019\r\ndistributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-5.1.1-all.zip\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+--- a/gradle/wrapper/gradle-wrapper.properties	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/gradle/wrapper/gradle-wrapper.properties	(date 1671349347754)
+@@ -3,4 +3,4 @@
+ distributionPath=wrapper/dists
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-5.1.1-all.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-7.4-all.zip
+Index: my_framework/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.mrdeveloper.my_framework\" />\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/my_framework/src/main/AndroidManifest.xml b/my_framework/src/main/AndroidManifest.xml
+--- a/my_framework/src/main/AndroidManifest.xml	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/my_framework/src/main/AndroidManifest.xml	(date 1671349235061)
+@@ -1,2 +1,1 @@
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.mrdeveloper.my_framework" />
++<manifest xmlns:android="http://schemas.android.com/apk/res/android" />
+Index: app/src/main/java/com/mrdeveloper/gravity/scenes/GameScene.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.mrdeveloper.gravity.scenes;\r\n\r\nimport android.graphics.Color;\r\nimport android.support.annotation.ColorLong;\r\n\r\nimport com.mrdeveloper.gravity.R;\r\nimport com.mrdeveloper.gravity.clases.GameManager;\r\nimport com.mrdeveloper.gravity.utilits.SettingsGame;\r\nimport com.mrdeveloper.gravity.utilits.ResourceGame;\r\nimport com.mrdeveloper.my_framework.core.CoreGame;\r\nimport com.mrdeveloper.my_framework.core.SceneGame;\r\n\r\npublic class GameScene extends SceneGame {\r\n\r\n    //region Fields\r\n    private GameState mGameState;\r\n    private GameManager mGameManager;\r\n\r\n    //Состояния игры\r\n    enum GameState {\r\n        READY, RUNNING, PAUSE, GAME_OVER\r\n    }\r\n    //endregion\r\n\r\n    //region Main methods\r\n    public GameScene(CoreGame coreGame) {\r\n        super(coreGame);\r\n        init(coreGame);\r\n        if (SettingsGame.sMusicOn){\r\n            ResourceGame.sMainMusicGame.play(true, 0.5f);\r\n        }\r\n\r\n    }\r\n\r\n    private void init(CoreGame coreGame) {\r\n        mGameState = GameState.READY;\r\n        mGameManager = new GameManager(coreGame, pSceneWidth, pSceneHeight);\r\n    }\r\n\r\n    @Override\r\n    public void update() {\r\n        //Обновление игры\r\n        if (mGameState == GameState.READY) {\r\n            updateStateReady();\r\n        }\r\n        if (mGameState == GameState.RUNNING) {\r\n            updateStateRunning();\r\n        }\r\n        if (mGameState == GameState.PAUSE) {\r\n            updateStatePause();\r\n        }\r\n        if (mGameState == GameState.GAME_OVER) {\r\n            updateStateGameOver();\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void drawing() {\r\n        //Перерисовка игры\r\n        pGraphicsGame.clearScene(Color.BLACK);\r\n\r\n        if (mGameState == GameState.READY) {\r\n            drawingStateReady();\r\n        }\r\n        if (mGameState == GameState.RUNNING) {\r\n            drawingStateRunning();\r\n        }\r\n        if (mGameState == GameState.PAUSE) {\r\n            drawingStatePause();\r\n        }\r\n        if (mGameState == GameState.GAME_OVER) {\r\n            drawingStateGameOver();\r\n        }\r\n\r\n    }\r\n    //endregion\r\n\r\n    //region Update state\r\n    private void updateStateGameOver() {\r\n        SettingsGame.addDistance(mGameManager.getPassedDistance());\r\n        if (pCoreGame.getTouchListenerFW().getTouchUp(250, 360, 100, 35)) {\r\n            pCoreGame.setScene(new GameScene(pCoreGame));\r\n        }\r\n        if (pCoreGame.getTouchListenerFW().getTouchUp(250, 420, 100, 35)) {\r\n            pCoreGame.setScene(new MainMenuScene(pCoreGame));\r\n        }\r\n\r\n    }\r\n\r\n    private void updateStatePause() {\r\n        if (pCoreGame.getTouchListenerFW().getTouchUp(0, pSceneHeight, pSceneWidth, pSceneHeight)) {\r\n            mGameState = GameState.RUNNING;\r\n        }\r\n\r\n    }\r\n\r\n    private void updateStateRunning() {\r\n        mGameManager.update();\r\n        if (GameManager.gameOver) {\r\n            mGameState = GameState.GAME_OVER;\r\n        }\r\n        if (pCoreGame.isPressedKeyBack()){\r\n            mGameState = GameState.PAUSE;\r\n            pCoreGame.setPressedKeyBack(false);\r\n        }\r\n    }\r\n\r\n    private void updateStateReady() {\r\n        if (pCoreGame.getTouchListenerFW().getTouchUp(0, pSceneHeight, pSceneWidth, pSceneHeight)) {\r\n            mGameState = GameState.RUNNING;\r\n        }\r\n    }\r\n    //endregion\r\n\r\n    //region Drawing state\r\n    private void drawingStateGameOver() {\r\n        pGraphicsGame.clearScene(Color.BLACK);\r\n        pGraphicsGame.drawText(pCoreGame.getString(R.string.txt_gameScene_stateGameOver_gameOver),\r\n                250, 300, Color.WHITE, 60, null);\r\n        pGraphicsGame.drawText(pCoreGame.getString(R.string.txt_gameScene_stateGameOver_restart),\r\n                250, 360, Color.WHITE, 30, null);\r\n        pGraphicsGame.drawText(pCoreGame.getString(R.string.txt_gameScene_stateGameOver_exit),\r\n                250, 420, Color.WHITE, 30, null);\r\n        pGraphicsGame.drawText(pCoreGame.getString(R.string.txt_gameScene_stateGameOver_distance) + \":\" + mGameManager.getPassedDistance(),\r\n                250, 200, Color.WHITE, 30, null);\r\n    }\r\n\r\n    private void drawingStatePause() {\r\n        pCoreGame.getGraphicsFW().drawText(\"ПАУЗА\", 200,300, Color.GREEN,50,null);\r\n\r\n    }\r\n\r\n    private void drawingStateRunning() {\r\n        pGraphicsGame.clearScene(Color.BLACK);\r\n        mGameManager.drawing(pGraphicsGame);\r\n    }\r\n\r\n    private void drawingStateReady() {\r\n        pGraphicsGame.clearScene(Color.BLACK);\r\n        pGraphicsGame.drawText(pCoreGame.getString(R.string.txt_gameScene_stateReady_ready),\r\n                250, 300, Color.WHITE, 60, null);\r\n    }\r\n    //endregion\r\n\r\n    //region @Override\r\n    @Override\r\n    public void pause() {\r\n        ResourceGame.sMainMusicGame.stop();\r\n    }\r\n\r\n    @Override\r\n    public void resume() {\r\n        if (SettingsGame.sMusicOn){\r\n            ResourceGame.sMainMusicGame.play(true, 0.5f);\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void dispose() {\r\n\r\n    }\r\n    //endregion\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/mrdeveloper/gravity/scenes/GameScene.java b/app/src/main/java/com/mrdeveloper/gravity/scenes/GameScene.java
+--- a/app/src/main/java/com/mrdeveloper/gravity/scenes/GameScene.java	(revision 2f2b2c69857ce573635534f47b42903ca66a1156)
++++ b/app/src/main/java/com/mrdeveloper/gravity/scenes/GameScene.java	(date 1671351376109)
+@@ -1,7 +1,6 @@
+ package com.mrdeveloper.gravity.scenes;
+ 
+ import android.graphics.Color;
+-import android.support.annotation.ColorLong;
+ 
+ import com.mrdeveloper.gravity.R;
+ import com.mrdeveloper.gravity.clases.GameManager;
